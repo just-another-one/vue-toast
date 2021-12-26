@@ -1,0 +1,32 @@
+{
+  "root": true,
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+
+    "target": "esnext",
+    "module": "esnext",
+
+    "declaration": true,
+    "declarationDir": "types",
+    "sourceMap": true,
+
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "useDefineForClassFields": true,
+    "jsx": "preserve",
+    "lib": ["esnext", "dom"],
+    "types": ["vite/client"],
+
+    "strict": true,
+
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["./src/**/*.ts", "./src/**/*.vue", "./docs/**/*.ts", "./docs/**/*.vue", "env.d.ts"],
+  "exclude": ["./dist/**/*"]
+}

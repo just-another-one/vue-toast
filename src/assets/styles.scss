@@ -1,0 +1,121 @@
+@use 'sass:color';
+@use 'sass:map';
+
+$colors: (
+  error: #dd000d,
+  info: #104b81,
+  warning: #f1b905,
+  success: #32b141,
+);
+
+@keyframes message-transition-in {
+  0% {
+    transform: translate3d(100%, 0, 0);
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes message-transition-out {
+  0% {
+    max-height: 1000px;
+    opacity: 1;
+  }
+
+  100% {
+    margin-bottom: 0;
+    max-height: 0px;
+    opacity: 0;
+  }
+}
+
+.message-transition-enter-active {
+  animation: var(--message-animation-in, message-transition-in 0.2s ease-in-out);
+}
+
+.message-transition-leave-active {
+  animation: var(--message-animation-out, message-transition-out 0.2s ease-in-out);
+}
+
+.messages-container {
+  --messages-container-offset: 1rem;
+  --messages-container-offset-x: var(--messages-container-offset);
+  --messages-container-offset-y: var(--messages-container-offset);
+
+  pointer-events: none;
+  position: fixed;
+  top: var(--messages-container-offset-y);
+  right: var(--messages-container-offset-x);
+
+  width: var(--messages-container-width, 25rem);
+  z-index: var(--message-z-index, 8192);
+}
+
+.messages-container-bottom-left {
+  bottom: var(--messages-container-offset-y);
+  left: var(--messages-container-offset-x);
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.messages-container-bottom-right {
+  bottom: var(--messages-container-offset-y);
+  right: var(--messages-container-offset-x);
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.message {
+  position: relative;
+  pointer-events: auto;
+  overflow: hidden;
+
+  box-sizing: border-box;
+  box-shadow: var(--message-box-shadow, 0 2px 10px 0 var(--message-shadow-color));
+  border: var(--message-border, 1px solid var(--message-border-color));
+  border-radius: var(--message-border-radius, 0);
+
+  margin-bottom: var(--message-offset, 1rem);
+
+  color: var(--message-color);
+  background: var(--message-bg-color);
+
+  display: flex;
+  align-items: flex-start;
+}
+
+@each $type, $color in $colors {
+  .message-#{$type} {
+    --message-color: var(--message-#{$type}-color, #{$color});
+    --message-bg-color: var(--message-#{$type}-bg-color, #{color.change($color, $lightness: 90%)});
+    --message-border-color: var(--message-#{$type}-border-color, #{$color});
+    --message-shadow-color: var(--message-#{$type}-shadow-color, #{color.change($color, $alpha: 0.25)});
+  }
+}
+
+.message-content {
+  padding: var(--message-padding, 1rem);
+}
+
+.message-close {
+  align-self: flex-start;
+  flex-shrink: 0;
+  margin-left: auto;
+
+  height: 1em;
+  width: 1em;
+  padding: 0;
+  border: none;
+  outline: none;
+
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1;
+
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+}
