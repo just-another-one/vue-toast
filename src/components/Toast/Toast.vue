@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { computed, defineComponent, PropType } from 'vue';
 
 import { Notification } from '@/components/Notification';
 import { Message } from '@/compositions';
@@ -18,6 +18,17 @@ export default defineComponent({
       type: String,
       default: 'message-transition',
     },
+    reverse: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  setup(props) {
+    const items = computed<Message[]>(() => {
+      return props.reverse ? [...props.messages].reverse() : props.messages;
+    });
+
+    return { items };
   },
 });
 </script>
@@ -27,9 +38,9 @@ export default defineComponent({
     class='messages-container'
     tag='div'
   >
-    <template v-for="message in messages">
+    <template v-for="item in items">
       <slot>
-        <notification v-bind="message" />
+        <notification v-bind="item" />
       </slot>
     </template>
   </transition-group>

@@ -9,6 +9,12 @@ export default defineComponent({
   components: {
     Toast,
   },
+  props: {
+    reverse: {
+      type: Boolean,
+      default: false,
+    },
+  },
   setup() {
     const { notifications } = useNotifications();
 
@@ -17,5 +23,8 @@ export default defineComponent({
 });
 </script>
 <template>
-  <toast :messages="notifications" />
+  <toast
+    :messages="notifications"
+    :reverse="reverse"
+  />
 </template>
