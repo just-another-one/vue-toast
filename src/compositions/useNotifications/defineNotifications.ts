@@ -19,27 +19,37 @@ export interface NotificationProps extends Message {
 type Options = Omit<NotificationProps, 'type'>;
 
 export function defineNotifications() {
-  const { messages, add } = useMessages<NotificationProps>();
+  const { messages, add, remove } = useMessages<NotificationProps>();
   const notifications = computed(() => [...messages.value.values()]);
 
+  function close(id: symbol) {
+    remove(id);
+  }
+
+  function closeAll() {
+    messages.value.clear();
+  }
+
   function error(options: Options) {
-    add({ ...options, type: NotificationType.Error });
+    return add({ ...options, type: NotificationType.Error });
   }
 
   function info(options: Options) {
-    add({ ...options, type: NotificationType.Info });
+    return add({ ...options, type: NotificationType.Info });
   }
 
   function success(options: Options) {
-    add({ ...options, type: NotificationType.Success });
+    return add({ ...options, type: NotificationType.Success });
   }
 
   function warning(options: Options) {
-    add({ ...options, type: NotificationType.Warning });
+    return add({ ...options, type: NotificationType.Warning });
   }
 
   return {
     notifications,
+    close,
+    closeAll,
     error,
     info,
     success,

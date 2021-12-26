@@ -24,6 +24,7 @@ export function useMessages<T extends Message = Message>() {
       },
     };
     messages.value.set(key, message);
+    return key;
   }
 
   return { add, remove, messages };

@@ -34,7 +34,7 @@ export default defineComponent({
     Notifications,
   },
   setup() {
-    const { error, info, success, warning } = useNotifications();
+    const { close, closeAll, error, info, success, warning } = useNotifications();
     const message =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec iaculis lectus. Ut vel metus vitae urna iaculis volutpat.';
 
@@ -54,9 +54,15 @@ export default defineComponent({
       error({ id, message: () => [h('span', {}, 'Updated sticky note')], duration: 2000 });
     }
 
+    function closeStickedNotification() {
+      close(id);
+    }
+
     return {
       enter,
       leave,
+      closeStickedNotification,
+      closeAll,
       showNotification,
       showStickyNotification,
       updateStickyNotification,
@@ -68,6 +74,8 @@ export default defineComponent({
   <button @click="showNotification">Show notification</button>
   <button @click="showStickyNotification">Show sticky notification</button>
   <button @click="updateStickyNotification">Update sticky notification</button>
+  <button @click="closeStickedNotification">close sticked notification</button>
+  <button @click="closeAll">Close all</button>
   <notifications
     transition="anime"
     @enter='enter'
