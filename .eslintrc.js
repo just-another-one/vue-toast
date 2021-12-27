@@ -53,6 +53,7 @@ module.exports = {
     // 'vue/no-unused-vars': 'error',
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: ['./docs/**/*'] }],
     'import/extensions': [
       'error',
       'ignorePackages',
