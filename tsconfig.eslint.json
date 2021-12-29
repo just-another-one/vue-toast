@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["vite/client", "jest"]
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.vue",
+    "./docs/**/*.ts",
+    "./docs/**/*.vue",
+    "./tests/**/*.spec.ts",
+    "env.d.ts",
+    "jest.config.ts",
+    "vite.config.ts"
+  ]
+}

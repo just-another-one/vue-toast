@@ -6,7 +6,8 @@ type NotificationsInstance = ReturnType<typeof defineNotifications>;
 export const NOTIFICATIONS: InjectionKey<NotificationsInstance> = Symbol('NOTIFICATIONS');
 
 export function useNotifications() {
-  const notifications = inject(NOTIFICATIONS);
+  // eslint-disable-next-line unicorn/no-useless-undefined
+  const notifications = inject(NOTIFICATIONS, undefined);
   if (!notifications) {
     throw new Error('Notifications not installed');
   }
