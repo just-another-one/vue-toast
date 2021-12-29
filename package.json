@@ -1,7 +1,7 @@
 {
   "name": "@just-another-one/vue-toast",
   "sideEffects": false,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Just another one plugin to show notifications",
   "main": "dist/vue-toast.umd.js",
   "module": "dist/vue-toast.es.js",
