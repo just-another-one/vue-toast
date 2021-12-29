@@ -1,0 +1,69 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import { ref } from 'vue';
+
+import 'normalize.css';
+import '@/assets/styles.scss';
+import { Notifications, useNotifications } from '@/index';
+
+<Meta title="Notifications" component={Notifications} />
+
+<style>{`
+  form {
+    width: 50%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-auto-flow: row;
+    gap: .5em;
+  }
+
+  .radio-group label {
+    display: block;
+    cursor: pointer;
+  }
+
+  .radio-group label > input{
+    margin: 0 0.5em;
+  }
+
+  button {
+    grid-column: 2/2;
+    width: fit-content;
+  }
+`}</style>
+
+export const Template = (args) => ({
+  components: { Notifications },
+  setup() {
+    const kind = ref('success');
+    const message = ref('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+    const notifications = useNotifications();
+    function showMessage() {
+      notifications[kind.value]({ message: message.value });
+    }
+    function showStickyMessage() {
+      notifications[kind.value]({ message: message.value, duration: 0 });
+    }
+    return { args, kind, message, showMessage, showStickyMessage, closeAll: notifications.closeAll };
+  },
+  template: `
+    <form>
+      <label>Message</label>
+      <input v-model="message">
+      <label>Kind</label>
+      <div class="radio-group">
+        <label><input type="radio" v-model="kind" name="kind" value="success">Success</label>
+        <label><input type="radio" v-model="kind" name="kind" value="info">Info</label>
+        <label><input type="radio" v-model="kind" name="kind" value="warning">Warning</label>
+        <label><input type="radio" v-model="kind" name="kind" value="error">Error</label>
+      </div>
+      <button @click.prevent="showMessage">Add messages</button> 
+      <button @click.prevent="showStickyMessage">Add sticky messages</button> 
+      <button @click.prevent="closeAll">Close all</button> 
+    </form>
+    <notifications v-bind="args" />
+  `,
+});
+
+# Notifications
+
+<Story name="Playground">{Template.bind({})}</Story>

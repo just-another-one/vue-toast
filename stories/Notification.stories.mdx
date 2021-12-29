@@ -1,0 +1,50 @@
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import { h, ref } from 'vue';
+
+import 'normalize.css';
+import '@/assets/styles.scss';
+import { Notification, useNotifications, NotificationType } from '@/index';
+
+<Meta title="Notification" component={Notification} />
+
+export const message = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+
+export const SimpleTemplate = (args) => ({
+  components: { Notification },
+  setup() {
+    return { message, NotificationType };
+  },
+  template: `
+    <notification v-bind="{ message, type: NotificationType.Success }" />
+    <notification v-bind="{ message, type: NotificationType.Info }" />
+    <notification v-bind="{ message, type: NotificationType.Warning }" />
+    <notification v-bind="{ message, type: NotificationType.Error }" />
+  `,
+});
+
+export const CustomTemplate = (args) => ({
+  components: { Notification },
+  setup() {
+    function message() {
+      return [h('h3', 'Custom notification'), h('span', 'This notification with header and without close button.')];
+    }
+    return { message };
+  },
+  template: `
+    <notification v-bind="{ message, closable: false }" />
+  `,
+});
+
+# Notification
+
+Simple notifications
+
+<Canvas>
+  <Story name="Simple">>{SimpleTemplate.bind({})}</Story>
+</Canvas>
+
+Custom notification
+
+<Canvas>
+  <Story name="Custom">>{CustomTemplate.bind({})}</Story>
+</Canvas>
